@@ -71,5 +71,12 @@ test('north', function (t) {
 test('south', function (t) {
   var polygon = [[-50,-70],[-170,-65],[140,-72],[40,-68]]
   t.ok(inside([0,-90], polygon), 'south pole')
+  t.ok(!inside([0,90], polygon), 'north pole')
+  t.ok(!inside([178,-67], polygon))
+  t.ok(inside([180,-71], polygon))
+  t.ok(inside([-180,-71], polygon))
+  t.ok(inside([-180,-71], polygon))
+  t.ok(!inside([-55,-69], polygon))
+  t.ok(inside([-55,-73], polygon))
   t.end()
 })

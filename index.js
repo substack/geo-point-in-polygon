@@ -1,6 +1,5 @@
 var igc = require('intersect-great-circle')
 var v0 = [0,0], v1 = [0,0], v2 = [0,0], v3 = [0,0], v4 = [0,0]
-var npole = [0,90], spole = [0,-90]
 
 module.exports = function geoPointInPolygon(point, P, start, end, far) {
   if (Array.isArray(start)) {

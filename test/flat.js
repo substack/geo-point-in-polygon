@@ -92,6 +92,19 @@ test('flat south', function (t) {
   t.end()
 })
 
+test('flat south reordered', function (t) {
+  var polygon = [140,-72,40,-68,-50,-70,-170,-65]
+  t.ok(inside([0,-90], polygon), 'south pole')
+  t.ok(!inside([0,90], polygon), 'north pole')
+  t.ok(!inside([178,-67], polygon))
+  t.ok(inside([180,-71], polygon))
+  t.ok(inside([-180,-71], polygon))
+  t.ok(inside([-180,-71], polygon))
+  t.ok(!inside([-55,-69], polygon))
+  t.ok(inside([-55,-73], polygon))
+  t.end()
+})
+
 test('flat origin', function (t) {
   var polygon = [ 1, 1, 1, -2, -3, -3, -3, 2 ]
   t.ok(inside([ 0, 0 ], polygon))

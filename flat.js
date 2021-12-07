@@ -13,8 +13,7 @@ module.exports = function geoPointInPolygon(point, P, start, end, far) {
   if (start === undefined) start = 0
   if (end === undefined) end = P.length
   if (far === undefined) {
-    // TODO: fix this. should be lon+180
-    v4[0] = -P[start+0]
+    v4[0] = P[start+0] + 180
     v4[1] = -P[start+1]
     far = v4
   }

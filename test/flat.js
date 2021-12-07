@@ -91,3 +91,9 @@ test('flat south', function (t) {
   t.ok(inside([-55,-73], polygon))
   t.end()
 })
+
+test('flat origin', function (t) {
+  var polygon = [ 1, 1, 1, -2, -3, -3, -3, 2 ]
+  t.ok(inside([ 0, 0 ], polygon))
+  t.end()
+})

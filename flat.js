@@ -1,21 +1,21 @@
 var igc = require('intersect-great-circle')
 var v0 = [0,0], v1 = [0,0], v2 = [0,0], v3 = [0,0], v4 = [0,0]
 
-module.exports = function geoPointInPolygon(point, P, start, end, far) {
+module.exports = function geoPointInPolygon(point, P, start, end, outside) {
   if (Array.isArray(start)) {
-    far = start
+    outside = start
     start = 0
   } else if (Array.isArray(end)) {
-    far = end
+    outside = end
     end = P.length
   }
   var inside = false
   if (start === undefined) start = 0
   if (end === undefined) end = P.length
-  if (far === undefined) {
+  if (outside === undefined) {
     v4[0] = (((P[start+0]+360)%360)+360)%360-180
     v4[1] = -P[start+1]
-    far = v4
+    outside = v4
   }
   v2[0] = point[0]
   v2[1] = point[1]
@@ -25,7 +25,7 @@ module.exports = function geoPointInPolygon(point, P, start, end, far) {
     v0[1] = P[start+i*2+1]
     v1[0] = P[start+j*2+0]
     v1[1] = P[start+j*2+1]
-    if (igc(v3,v0,v1,v2,far)) {
+    if (igc(v3,v0,v1,v2,outside)) {
       inside = !inside
     }
   }

@@ -2,8 +2,8 @@ var test = require('tape')
 var inside = require('../')
 
 // these two are pretty much from point-in-polygon
-test('box', function (t) {
-  var polygon = [ [ 1, 1 ], [ 1, 2 ], [ 2, 2 ], [ 2, 1 ] ]
+test('flat box', function (t) {
+  var polygon = [ 1, 1, 1, 2, 2, 2, 2, 1 ]
   t.ok(inside([ 1.5, 1.5 ], polygon))
   t.ok(inside([ 1.2, 1.9 ], polygon))
   t.ok(!inside([ 0, 1.9 ], polygon))
@@ -24,8 +24,8 @@ test('box', function (t) {
    *          * 
    *************
  */
-test('flag', function (t) {
-  var polygon = [ [ 1, 1 ], [ 10, 1 ], [ 5, 5 ], [ 10, 10 ], [ 1, 10 ] ]
+test('flat flag', function (t) {
+  var polygon = [ 1, 1, 10, 1, 5, 5, 10, 10, 1, 10 ]
   t.ok(inside([ 2, 5 ], polygon))
   t.ok(inside([ 3, 5 ], polygon))
   t.ok(inside([ 4, 5 ], polygon))
@@ -35,8 +35,19 @@ test('flag', function (t) {
   t.end()
 })
 
+test('flat flag offset', function (t) {
+  var polygon = [ 100,101,102, 1, 1, 10, 1, 5, 5, 10, 10, 1, 10, 103,104,105 ]
+  t.ok(inside([ 2, 5 ], polygon, 3, 13))
+  t.ok(inside([ 3, 5 ], polygon, 3, 13))
+  t.ok(inside([ 4, 5 ], polygon, 3, 13))
+  t.ok(!inside([ 10, 5 ], polygon, 3, 13))
+  t.ok(!inside([ 11, 5 ], polygon, 3, 13))
+  t.ok(!inside([ 9, 5 ], polygon, 3, 13))
+  t.end()
+})
+
 // now for some shapes where the arcs are more pronounced
-test('north', function (t) {
+test('flat north', function (t) {
   var anchorage = [-149.90028,61.21806]
   var fairbanks = [-147.71639,64.83778]
   var utqiagvik = [-156.78872,71.29058]
@@ -52,7 +63,7 @@ test('north', function (t) {
   var stpetersburg = [30.31413,59.93863]
   var oulu = [25.46816,65.01236]
   var longyearbyen = [15.64007,78.2186]
-  var polygon = [fairbanks,magadan,stpetersburg,trondheim,reykjavik,nuuk,iqaluit]
+  var polygon = [].concat(fairbanks,magadan,stpetersburg,trondheim,reykjavik,nuuk,iqaluit)
   t.ok(!inside(vladivostok, polygon), 'vladivostok')
   t.ok(inside(sisimiut, polygon), 'sisimiut')
   t.ok(inside(utqiagvik, polygon), 'utqiagvik')
@@ -68,8 +79,8 @@ test('north', function (t) {
   t.end()
 })
 
-test('south', function (t) {
-  var polygon = [[-50,-70],[-170,-65],[140,-72],[40,-68]]
+test('flat south', function (t) {
+  var polygon = [-50,-70,-170,-65,140,-72,40,-68]
   t.ok(inside([0,-90], polygon), 'south pole')
   t.ok(!inside([0,90], polygon), 'north pole')
   t.ok(!inside([178,-67], polygon))
